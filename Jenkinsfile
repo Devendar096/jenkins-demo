@@ -22,5 +22,12 @@ pipeline {
                 sh 'docker run -d -p 5000:5000 --name flask-app flask-docker-app'
             }
         }
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh 'docker run --rm flask-docker-app python -m unittest test_app.py'
+            }
+        }
+
     }
 }
