@@ -31,7 +31,7 @@ pipeline {
 
 stage('Cloning Git') {
 steps {
-checkout scmGit(branches: [[name: '*/main']], extensions:[], userRemoteConfigs: [[CredentialsId: 'LakshmiChandana10', url: 'https://github.com/LakshmiChandana10/flask-docker-jenkins.git']])
+checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'LakshmiChandana10', url: 'https://github.com/LakshmiChandana10/flask-docker-jenkins.git']])
 }
 
     }
