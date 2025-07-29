@@ -2,13 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone Repo') {
-            steps {
-                echo 'Cloning repository...'
-                checkout scm
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
@@ -16,13 +9,17 @@ pipeline {
             }
         }
 
+        stage('Stop Existing Container') {
+            steps {
+                echo 'Stopping and removing old container if exists...'
+                sh 'docker rm -f flask-app || true'
+            }
+        }
+
         stage('Run Container') {
             steps {
-                echo 'Running container...'
-                sh '''
-                    docker rm -f flask-app || true
-                    docker run -d -p 5000:5000 --name flask-app flask-docker-app
-                '''
+                echo 'Running Docker container...'
+                sh 'docker run -d -p 5000:5000 --name flask-app flask-docker-app'
             }
         }
     }
