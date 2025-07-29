@@ -28,6 +28,12 @@ pipeline {
                 sh 'docker run --rm flask-docker-app python -m unittest test_app.py'
             }
         }
+stages {
+stage('Cloning Git') {
+steps {
+checkout scmGit(branches: [[name: '*/main']], extensions:[], userRemoteConfigs: [[CredentialsId: 'LakshmiChandana10', url: 'https://github.com/LakshmiChandana10/flask-docker-jenkins.git']])
+}
+}
 
     }
 }
