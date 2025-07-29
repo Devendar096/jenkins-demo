@@ -12,15 +12,15 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
-                sh 'docker build -t flask-docker-app .'
+                bat 'docker build -t flask-docker-app .'
             }
         }
 
         stage('Run Container') {
             steps {
                 echo 'Running container...'
-                sh '''
-                    docker rm -f flask-app || true
+                bat '''
+                    docker rm -f flask-app || exit 0
                     docker run -d -p 5000:5000 --name flask-app flask-docker-app
                 '''
             }
