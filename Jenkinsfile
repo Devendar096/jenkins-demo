@@ -9,6 +9,12 @@ pipeline {
             }
         }
 
+        stage('Test Docker Access') {
+            steps {
+                 sh 'docker version'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t flask-docker-app .'
