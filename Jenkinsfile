@@ -5,7 +5,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
-                sh 'docker build -t flask-docker-app.'
+                sh 'docker build -t flask-docker-ap.'
             }
         }
 
@@ -33,6 +33,19 @@ stage('Cloning Git') {
 steps {
 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Devendar096', url: 'https://github.com/Devendar096/jenkins-demo-.git']])
 }
+
+
+
+
+
+        stage('Check Docker') {
+            steps {
+                sh 'docker --version'
+            }
+        }
+ 
+
+
 
     }
 }
