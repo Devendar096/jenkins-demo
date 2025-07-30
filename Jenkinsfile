@@ -2,51 +2,31 @@ pipeline {
     agent any
 
     stages {
+        stage('Cloning Git') {
+            steps {
+                git 'https://github.com/Devendar096/jenkins-demo-.git'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
-                echo 'Building Docker image...'
-                sh 'docker build -t flask-docker-ap.'
+                sh 'docker build -t flask-docker-app .'
             }
         }
 
-        stage('Stop Existing Container') {
+        stage('Stop and Remove Old Container') {
             steps {
-                echo 'Stopping and removing old container if exists...'
-                sh 'docker rm -f flask-app || true'
+                sh '''
+                    docker stop flask-app || true
+                    docker rm flask-app || true
+                '''
             }
         }
 
-        stage('Run Container') {
+        stage('Run Docker Container') {
             steps {
-                echo 'Running Docker container...'
                 sh 'docker run -d -p 5000:5000 --name flask-app flask-docker-app'
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-                sh 'docker run --rm flask-docker-app python -m unittest test_app.py'
-            }
-        }
-
-stage('Cloning Git') {
-steps {
-checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Devendar096', url: 'https://github.com/Devendar096/jenkins-demo-.git']])
-}
-
-
-
-
-
-        stage('Check Docker') {
-            steps {
-                sh 'docker --version'
-            }
-        }
- 
-
-
-
     }
-}
 }
