@@ -12,6 +12,7 @@ pipeline {
         stage('Stop Existing Container') {
             steps {
                 echo 'Stopping and removing old container if exists...'
+                sh 'docker stop flask-app || true'
                 sh 'docker rm -f flask-app || true'
             }
         }
