@@ -1,7 +1,15 @@
 pipeline {
     agent any
 
+
+
     stages {
+
+        stage('Cloning Git') {
+steps {
+checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Devendar096', url: 'https://github.com/Devendar096/jenkins-demo.git']])
+}
+
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
@@ -30,10 +38,7 @@ pipeline {
             }
         }
 
-stage('Cloning Git') {
-steps {
-checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Devendar096', url: 'https://github.com/Devendar096/jenkins-demo.git']])
-}
+
 
     }
 }
