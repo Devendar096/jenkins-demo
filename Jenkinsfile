@@ -15,6 +15,18 @@ pipeline {
             }
         }
 
+
+        stage('Cleanup Existing Containers') {
+    steps {
+        sh '''
+        if docker ps -q --filter "ancestor=flask-app" | grep .; then
+          docker rm -f $(docker ps -q --filter "ancestor=flask-app")
+        fi
+        '''
+    }
+}
+
+
         stage('Run Docker Container') {
             steps {
                 sh 'docker run -d -p 5050:5000 flask-app'
